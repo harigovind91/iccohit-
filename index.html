@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICCOHIT | Create, Monetize & Rule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --hit-cyan: #00f2ff; --hit-deep: #020202; }
+        body { background: var(--hit-deep); color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; }
+        .font-sync { font-family: 'Syncopate', sans-serif; }
+        .glass-panel { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.05); }
+        .nav-active { color: var(--hit-cyan); border-bottom: 2px solid var(--hit-cyan); }
+        
+        /* Custom Scroll for Feed */
+        .icco-feed { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; }
+        .icco-card { height: 100vh; scroll-snap-align: start; position: relative; border-bottom: 1px solid #111; }
+        
+        /* Recording Animation */
+        .rec-dot { width: 12px; height: 12px; background: red; border-radius: 50%; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    </style>
+</head>
+<body>
+
+    <aside class="fixed left-0 top-0 h-screen w-20 flex flex-col items-center py-8 glass-panel z-50">
+        <div class="mb-10 font-sync text-cyan-400 font-bold text-xl tracking-tighter rotate-[-90deg] mt-8">ICCOHIT</div>
+        <nav class="flex-1 flex flex-col gap-10 text-xl">
+            <button onclick="showUI('home')" title="Home">🏠</button>
+            <button onclick="showUI('studio')" title="Record Studio">🎥</button>
+            <button onclick="showUI('ads')" title="Ad Center">📢</button>
+            <button onclick="showUI('wallet')" title="Earnings">💰</button>
+        </nav>
+        <button onclick="showUI('profile')" class="w-12 h-12 rounded-2xl overflow-hidden border border-cyan-500/50">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Harigovind" alt="Profile">
+        </button>
+    </aside>
+
+    <main id="view-home" class="icco-feed ml-20">
+        <div class="icco-card flex items-center justify-center bg-black">
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+            <video class="h-full w-auto object-cover" loop muted autoplay src=""></video>
+            
+            <div class="absolute right-6 bottom-32 z-20 flex flex-col gap-6">
+                <div class="text-center"><button class="text-2xl">🔥</button><p class="text-[10px]">1.2M</p></div>
+                <div class="text-center"><button class="text-2xl">💬</button><p class="text-[10px]">450</p></div>
+                <div class="text-center"><button class="text-2xl">🚀</button><p class="text-[10px]">Share</p></div>
+            </div>
+            
+            <div class="absolute bottom-10 left-10 z-20">
+                <h3 class="font-black text-lg">@harigovind_official</h3>
+                <p class="text-zinc-400 text-sm mt-1">Researching the future of Sovereign AI. #ICCOHIT #Research</p>
+            </div>
+        </div>
+    </main>
+
+    <section id="view-studio" class="hidden ml-20 h-screen p-10 bg-black flex flex-col">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="font-sync text-sm tracking-widest text-cyan-400">STUDIO ENGINE V3.0</h2>
+            <div class="flex items-center gap-4">
+                <div class="rec-dot"></div>
+                <span id="timer" class="font-mono text-xl">00:00:00</span>
+            </div>
+        </div>
+
+        <div class="flex-1 grid grid-cols-12 gap-10">
+            <div class="col-span-8 bg-zinc-900 rounded-[3rem] border border-white/5 relative overflow-hidden">
+                <div id="camera-preview" class="w-full h-full flex items-center justify-center text-zinc-700">
+                    [ Camera Feed Active ]
+                </div>
+                <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-6">
+                    <button class="w-16 h-16 rounded-full border-4 border-white flex items-center justify-center">
+                        <div class="w-12 h-12 bg-red-600 rounded-full"></div>
+                    </button>
+                    <button class="bg-zinc-800 px-6 rounded-full text-xs font-bold">Gallery 🖼️</button>
+                </div>
+            </div>
+
+            <div class="col-span-4 space-y-6">
+                <div class="glass-panel p-6 rounded-[2.5rem]">
+                    <label class="text-[10px] font-bold text-zinc-500 uppercase">Filters & AI Mixing</label>
+                    <div class="grid grid-cols-3 gap-2 mt-4">
+                        <button class="p-2 bg-white/5 rounded-xl text-[10px]">Vibrant</button>
+                        <button class="p-2 bg-white/5 rounded-xl text-[10px]">Noir</button>
+                        <button class="p-2 bg-white/5 rounded-xl text-[10px]">Cinematic</button>
+                    </div>
+                    <input type="text" placeholder="Add Caption..." class="w-full bg-black/50 mt-6 p-4 rounded-xl text-sm border border-white/5">
+                </div>
+                <button onclick="publishContent()" class="w-full bg-cyan-600 py-5 rounded-[2rem] font-black shadow-xl shadow-cyan-600/20">PUBLISH TO ICCOHIT</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="view-wallet" class="hidden ml-20 h-screen p-10 overflow-y-auto">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-sync text-2xl mb-10">CREATOR DASHBOARD</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-8 rounded-[3rem] border-l-4 border-cyan-500">
+                    <p class="text-zinc-500 text-xs font-bold uppercase">Main Wallet</p>
+                    <p class="text-4xl font-black mt-2">₹1,24,000</p>
+                    <button onclick="withdrawFunds()" class="mt-6 w-full bg-white text-black py-3 rounded-2xl text-[10px] font-black uppercase">Withdraw to UPI</button>
+                </div>
+                <div class="glass-panel p-8 rounded-[3rem]">
+                    <p class="text-zinc-500 text-xs font-bold uppercase">Ad Revenue</p>
+                    <p class="text-4xl font-black mt-2">₹45,500</p>
+                    <p class="text-[10px] text-emerald-500 mt-2">+12% from last week</p>
+                </div>
+                <div class="glass-panel p-8 rounded-[3rem]">
+                    <p class="text-zinc-500 text-xs font-bold uppercase">Profile Reach</p>
+                    <p class="text-4xl font-black mt-2">2.4M</p>
+                </div>
+            </div>
+
+            <div class="mt-10 glass-panel p-10 rounded-[3rem] space-y-6">
+                <h3 class="font-bold text-cyan-400">Creator Identity (Verified)</h3>
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label class="text-[10px] text-zinc-500 block mb-1">COUNTRY</label>
+                        <p class="font-bold">INDIA</p>
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-zinc-500 block mb-1">PIN CODE</label>
+                        <p class="font-bold">226001</p>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="text-[10px] text-zinc-500 block mb-1">BASE ADDRESS</label>
+                        <p class="font-bold">Lucknow, Uttar Pradesh, India</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="view-profile" class="hidden ml-20 h-screen p-10">
+        <div class="max-w-2xl mx-auto glass-panel p-10 rounded-[4rem] text-center">
+            <div class="relative inline-block">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Harigovind" class="w-32 h-32 rounded-[2.5rem] bg-zinc-800 border-4 border-cyan-500 mx-auto">
+                <button class="absolute bottom-0 right-0 bg-white text-black p-2 rounded-full text-xs">✏️</button>
+            </div>
+            <h2 class="text-3xl font-black mt-6 italic">DR. HARIGOVIND</h2>
+            <p class="text-zinc-500 text-sm italic">Sovereign Researcher & Director</p>
+            
+            <div class="mt-10 grid grid-cols-2 gap-4">
+                <button class="bg-zinc-900 py-4 rounded-2xl text-xs font-bold">Edit Profile</button>
+                <button class="bg-zinc-900 py-4 rounded-2xl text-xs font-bold">Security Settings</button>
+                <button class="bg-red-900/20 text-red-500 py-4 rounded-2xl text-xs font-bold col-span-2">Log Out</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function showUI(section) {
+            const views = ['home', 'studio', 'wallet', 'profile', 'ads'];
+            views.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (el) el.classList.add('hidden');
+            });
+            document.getElementById(`view-${section}`).classList.remove('hidden');
+        }
+
+        function withdrawFunds() {
+            const upi = "harigovindsingh91-2@oksbi";
+            alert(`ICCOHIT Alert: विड्रॉल रिक्वेस्ट प्रोसेस हो रही है। पेमेंट सीधे ${upi} पर भेजा जाएगा।`);
+        }
+
+        function publishContent() {
+            alert("ICCOHIT Studio: वीडियो रेंडर हो रहा है और आपके प्रोफाइल में सेव किया जा रहा है...");
+            showUI('home');
+        }
+    </script>
+</body>
+</html>
+
