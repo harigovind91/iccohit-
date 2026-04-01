@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecohit | Create, Boost & Earn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --eco-cyan: #00f2ff; --eco-gold: #ffcc00; }
+        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
+        .eco-btn { transition: all 0.3s ease; border-radius: 2rem; font-weight: 900; }
+        .eco-btn:active { scale: 0.95; }
+        .video-feed { scroll-snap-type: y mandatory; height: 100vh; overflow-y: scroll; }
+        .video-card { scroll-snap-align: start; height: 100vh; position: relative; }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-cyan-500 rounded-full animate-ping"></div>
+            <h1 class="text-2xl font-black tracking-tighter italic">ECOHIT</h1>
+        </div>
+        <div class="flex gap-4 items-center">
+            <button onclick="showSection('ad-studio')" class="text-[10px] font-bold text-amber-500 border border-amber-500/30 px-4 py-2 rounded-full uppercase">Ad Center 📢</button>
+            <button onclick="showSection('creative-studio')" class="bg-white text-black px-5 py-2 rounded-full text-[10px] font-black uppercase shadow-lg">Create +</button>
+            <button onclick="showSection('wallet')" class="w-10 h-10 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center text-xl">👤</button>
+        </div>
+    </nav>
+
+    <main id="home-feed" class="video-feed">
+        <div class="video-card bg-zinc-950 flex items-center justify-center">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10"></div>
+            <p class="text-zinc-800 italic">Video Player Loading...</p>
+            
+            <div class="absolute bottom-10 left-6 z-20 space-y-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-cyan-500"></div>
+                    <p class="font-bold">@harigovind_researcher</p>
+                    <button onclick="openBoost()" class="bg-amber-500 text-black text-[9px] font-black px-2 py-1 rounded italic uppercase">Boost 🚀</button>
+                </div>
+                <p class="text-sm text-zinc-400 max-w-[250px]">Ecohit का नया वीडियो मिक्सिंग टूल अब लाइव है! #Ecohit #Viral</p>
+            </div>
+        </div>
+    </main>
+
+    <section id="creative-studio" class="hidden fixed inset-0 z-[60] bg-black p-6 flex flex-col">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-black italic text-cyan-400 underline">ECOHIT STUDIO V1.0</h2>
+            <button onclick="showSection('home-feed')" class="text-zinc-500 text-xs">CLOSE</button>
+        </div>
+        <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-zinc-900 rounded-[3rem] border border-white/5 flex flex-col items-center justify-center p-10 border-dashed">
+                <input type="file" id="video-upload" class="hidden">
+                <label for="video-upload" class="cursor-pointer text-center">
+                    <span class="text-4xl block mb-4">🎥</span>
+                    <p class="text-sm font-bold">वीडियो चुनें (Select Video)</p>
+                    <p class="text-[10px] text-zinc-600 mt-2 italic">Cutting & Mixing Tools Automatic</p>
+                </label>
+            </div>
+            <div class="space-y-6">
+                <div class="glass p-6 rounded-3xl">
+                    <p class="text-[10px] font-bold text-zinc-500 uppercase mb-4">Audio Mixing & Filters</p>
+                    <input type="range" class="w-full accent-cyan-500 mb-4">
+                    <div class="flex gap-2">
+                        <button class="flex-1 bg-zinc-800 py-2 rounded-xl text-[10px]">Cinematic</button>
+                        <button class="flex-1 bg-zinc-800 py-2 rounded-xl text-[10px]">Vivid</button>
+                        <button class="flex-1 bg-zinc-800 py-2 rounded-xl text-[10px]">B&W</button>
+                    </div>
+                </div>
+                <button onclick="processAndPay('Boost_Plan')" class="w-full bg-cyan-600 py-5 rounded-[2rem] font-black text-lg">POST & START EARNING</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="ad-studio" class="hidden fixed inset-0 z-[60] bg-[#080808] p-6 overflow-y-auto">
+        <div class="max-w-2xl mx-auto py-10">
+            <h2 class="text-3xl font-black text-amber-500 italic mb-2 uppercase">Business Ad Center</h2>
+            <p class="text-zinc-500 text-sm mb-10 tracking-widest">ECOHIT विज्ञापन सेवा (Subscription Based)</p>
+            
+            <div class="space-y-6">
+                <input type="text" placeholder="Product / Business Name" class="w-full bg-zinc-900 p-5 rounded-3xl outline-none border border-white/5">
+                <div class="grid grid-cols-2 gap-4">
+                    <div onclick="setPlan(999)" class="glass p-6 rounded-3xl border-2 border-amber-500 cursor-pointer">
+                        <p class="text-[10px] font-bold text-amber-500">WEEKLY BOOST</p>
+                        <p class="text-2xl font-black">₹999</p>
+                    </div>
+                    <div onclick="setPlan(2499)" class="glass p-6 rounded-3xl border border-white/5 opacity-50">
+                        <p class="text-[10px] font-bold text-zinc-500">MONTHLY MAX</p>
+                        <p class="text-2xl font-black text-zinc-500">₹2,499</p>
+                    </div>
+                </div>
+                <button onclick="triggerPayment(999)" class="w-full bg-amber-500 text-black py-5 rounded-[2.5rem] font-black text-lg shadow-xl shadow-amber-500/20">PAY ₹999 & PUBLISH AD</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="wallet" class="hidden fixed inset-0 z-[60] bg-black flex items-center justify-center p-6">
+        <div class="glass max-w-sm w-full p-10 rounded-[3.5rem] text-center border border-white/10">
+            <h3 class="text-zinc-500 text-[10px] font-bold uppercase tracking-widest mb-2">Ecohit Balance</h3>
+            <h2 class="text-5xl font-black italic">₹4,520.50</h2>
+            
+            <div class="mt-10 space-y-4">
+                <p class="text-[10px] text-zinc-600 text-left uppercase font-bold">Withdrawal Settings</p>
+                <div class="bg-black/50 p-4 rounded-2xl text-left border border-white/5">
+                    <p class="text-[10px] text-zinc-500">Primary UPI</p>
+                    <p class="text-sm font-mono text-cyan-400">harigovindsingh91-2@oksbi</p>
+                </div>
+                <button class="w-full bg-white text-black py-4 rounded-2xl font-black uppercase text-xs">Withdraw Now</button>
+            </div>
+            <button onclick="showSection('home-feed')" class="mt-8 text-zinc-700 text-[10px] underline">Back to Feed</button>
+        </div>
+    </section>
+
+    <script>
+        // 1. Navigation Logic
+        function showSection(id) {
+            const sections = ['home-feed', 'creative-studio', 'ad-studio', 'wallet'];
+            sections.forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        // 2. Payment Intent Logic (Ecohit Branding)
+        function triggerPayment(amt) {
+            const upiId = "harigovindsingh91-2@oksbi";
+            const upiName = "Ecohit";
+            const intentUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(upiName)}&am=${amt}&cu=INR&tn=EcohitSubscription`;
+            
+            // यह सीधे मोबाइल ऐप्स (GPay, PhonePe) को ट्रिगर करेगा
+            window.location.href = intentUrl;
+
+            // बैकएंड को डेटा भेजना (Pending Status)
+            saveTransactionToMongo(amt, 'Subscription');
+        }
+
+        // 3. Admin Mock (In a real app, this goes to your Mongo API)
+        async function saveTransactionToMongo(amount, type) {
+            console.log(`Transaction Initiated: ${amount} for ${type}`);
+            alert("Ecohit: विड्रॉल/सब्सक्रिप्शन रिक्वेस्ट एडमिन को भेज दी गई है। वेरिफिकेशन के बाद यह लाइव होगा।");
+        }
+
+        function openBoost() {
+            const confirmBoost = confirm("क्या आप ₹199 में इस रील को 24 घंटे के लिए वायरल बूस्ट देना चाहते हैं?");
+            if(confirmBoost) triggerPayment(199);
+        }
+    </script>
+</body>
+</html>
