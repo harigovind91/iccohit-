@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICCOHIT | Sovereign Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh; }
+        
+        /* Premium Viewport */
+        .display-area { height: 75vh; display: flex; align-items: center; justify-content: center; padding: 30px; }
+        .content-box { display: none; width: 100%; max-width: 800px; text-align: center; animation: slideUp 0.4s ease; }
+        .active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* The Master Footer Hub */
+        .footer-hub { height: 25vh; background: #080808; border-top: 1px solid #111; position: fixed; bottom: 0; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 20px; z-index: 100; }
+        
+        /* Navigation Dock */
+        .dock { display: flex; align-items: center; gap: 50px; position: relative; }
+        .nav-btn { font-size: 24px; opacity: 0.3; transition: 0.3s; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+        .nav-btn:hover, .active-nav { opacity: 1; color: #00f2ff; }
+        .nav-btn span { font-size: 8px; font-weight: 900; margin-top: 5px; tracking-widest; }
+
+        /* Floating Plus Button (The Magic Trigger) */
+        .plus-btn { width: 70px; height: 70px; background: #00f2ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 30px; box-shadow: 0 0 40px rgba(0, 242, 255, 0.3); transform: translateY(-35px); transition: 0.5s; cursor: pointer; }
+        .plus-btn:hover { transform: translateY(-40px) rotate(90deg); background: #fff; }
+
+        /* Creative Menu Overlay */
+        #creative-menu { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 200; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
+        .menu-grid { display: grid; grid-cols-2; gap: 20px; text-align: center; }
+        .menu-item { background: #111; padding: 40px; border-radius: 40px; border: 1px solid #222; transition: 0.3s; cursor: pointer; }
+        .menu-item:hover { border-color: #00f2ff; background: rgba(0, 242, 255, 0.05); }
+
+        /* Admin Meta Text */
+        .admin-meta { font-size: 9px; color: #333; font-weight: bold; text-align: center; line-height: 1.4; text-transform: uppercase; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <main class="display-area">
+        <div id="view-home" class="content-box active">
+            <h1 class="text-7xl font-black italic tracking-tighter">Iccohit</h1>
+            <p class="text-zinc-700 tracking-[0.5em] text-[10px] mt-4">DR. HARIGOVIND SINGH CHAUHAN</p>
+        </div>
+        <div id="view-wallet" class="content-box">
+            <h2 class="text-6xl font-black italic">₹1,24,500</h2>
+            <p class="text-cyan-500 font-bold mt-4">Wallet: harigovindsingh91-2@oksbi</p>
+        </div>
+    </main>
+
+    <div id="creative-menu" onclick="toggleMenu()">
+        <div class="grid grid-cols-2 gap-6 p-6 w-full max-w-xl">
+            <div onclick="action('LIVE 🔴')" class="menu-item"><p class="text-4xl mb-4">📡</p><p class="text-[10px] font-black uppercase tracking-widest">Live Broadcast</p></div>
+            <div onclick="action('REEL 🎞️')" class="menu-item"><p class="text-4xl mb-4">🎬</p><p class="text-[10px] font-black uppercase tracking-widest">Create Reel</p></div>
+            <div onclick="action('VIDEO 🎥')" class="menu-item"><p class="text-4xl mb-4">📽️</p><p class="text-[10px] font-black uppercase tracking-widest">Upload Video</p></div>
+            <div onclick="action('POST 📝')" class="menu-item"><p class="text-4xl mb-4">🖋️</p><p class="text-[10px] font-black uppercase tracking-widest">New Post</p></div>
+        </div>
+    </div>
+
+    <footer class="footer-hub">
+        
+        <div class="dock">
+            <div onclick="show('home')" id="n-home" class="nav-btn active-nav">🏠<span>HOME</span></div>
+            
+            <div onclick="toggleMenu()" class="plus-btn">+</div>
+            
+            <div onclick="show('wallet')" id="n-wallet" class="nav-btn">💰<span>WALLET</span></div>
+        </div>
+
+        <div class="admin-meta">
+            ADMIN: HARIGOVIND SINGH CHAUHAN | LUCKNOW, UP - 226001 <br>
+            <span class="text-zinc-600">ACIWHO WELFARE FOUNDATION | UPI: harigovindsingh91-2@oksbi | © 2026 ICCOHIT</span>
+        </div>
+
+    </footer>
+
+    <script>
+        function show(id) {
+            document.querySelectorAll('.content-box').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-' + id).classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav'));
+            document.getElementById('n-' + id).classList.add('active-nav');
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('creative-menu');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function action(type) {
+            alert("ICCOHIT System: " + type + " इंजन शुरू हो रहा है... कृपया कैमरा और डेटाबेस अनुमति दें।");
+        }
+    </script>
+</body>
+</html>
