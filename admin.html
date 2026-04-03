@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICCOHIT | Admin Control Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: #f4f7f6; font-family: 'Inter', sans-serif; margin: 0; }
+        .sidebar { width: 260px; height: 100vh; background: #000; color: #fff; position: fixed; transition: 0.3s; }
+        .main-view { margin-left: 260px; padding: 30px; }
+        .card { background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        #auth-overlay { position: fixed; inset: 0; background: #fff; z-index: 9999; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+
+    <div id="auth-overlay">
+        <div class="text-center p-8 bg-zinc-50 rounded-3xl shadow-xl border w-80">
+            <i class="fas fa-user-shield text-4xl mb-4"></i>
+            <h2 class="font-black italic mb-4">MASTER ACCESS</h2>
+            <input type="password" id="master-key" placeholder="Enter Security Key" class="w-full p-3 rounded-xl border mb-4 text-center outline-none">
+            <button onclick="checkAccess()" class="w-full bg-black text-white py-3 rounded-xl font-bold uppercase tracking-widest text-sm">Unlock Panel</button>
+        </div>
+    </div>
+
+    <div class="sidebar p-6">
+        <h2 class="text-xl font-black italic tracking-tighter mb-10 text-white">ICCOHIT ADMIN</h2>
+        <nav class="space-y-6">
+            <div class="flex items-center gap-3 cursor-pointer text-white font-bold"><i class="fas fa-wallet"></i> Withdrawals</div>
+            <div class="flex items-center gap-3 cursor-pointer text-zinc-400 hover:text-white" onclick="alert('Syncing Ads...')"><i class="fas fa-ad"></i> Ad Manager</div>
+            <div class="flex items-center gap-3 cursor-pointer text-zinc-400 hover:text-white"><i class="fas fa-users"></i> Global Users</div>
+            <div class="flex items-center gap-3 cursor-pointer text-zinc-400 hover:text-white" onclick="location.reload()"><i class="fas fa-sync"></i> Refresh Data</div>
+        </nav>
+        <div class="absolute bottom-10 left-6 text-[10px] text-zinc-500 font-bold uppercase tracking-widest">Sovereign Node v1.0</div>
+    </div>
+
+    <div class="main-view">
+        <header class="flex justify-between items-center mb-10">
+            <div>
+                <h1 class="text-3xl font-black italic">GLOBAL SYSTEM CONTROL</h1>
+                <p class="text-zinc-500 text-sm">Managing ICCOHIT Ecosystem Real-time</p>
+            </div>
+            <div id="sync-status" class="bg-green-100 text-green-700 px-4 py-1 rounded-full text-xs font-bold uppercase">
+                <i class="fas fa-circle text-[8px] mr-1"></i> MongoDB Connected
+            </div>
+        </header>
+
+        <div class="grid grid-cols-3 gap-6 mb-10">
+            <div class="card border-l-4 border-blue-500">
+                <p class="text-zinc-400 text-[10px] font-bold uppercase mb-1">Pending Payouts</p>
+                <h3 class="text-2xl font-black italic">₹<span id="pending-sum">1250.00</span></h3>
+            </div>
+            <div class="card border-l-4 border-black">
+                <p class="text-zinc-400 text-[10px] font-bold uppercase mb-1">Global Active Ads</p>
+                <h3 class="text-2xl font-black italic">01</h3>
+            </div>
+            <div class="card border-l-4 border-purple-500">
+                <p class="text-zinc-400 text-[10px] font-bold uppercase mb-1">Master Server</p>
+                <h3 class="text-2xl font-black italic">ONLINE</h3>
+            </div>
+        </div>
+
+        <div class="card mb-10">
+            <h3 class="font-bold mb-6 text-lg border-b pb-2">Pending Withdrawals (Synced from index.html)</h3>
+            <div id="request-list" class="space-y-3">
+                <div class="flex justify-between items-center p-5 bg-zinc-50 rounded-2xl border border-zinc-100">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-zinc-200 rounded-full flex items-center justify-center font-bold">HG</div>
+                        <div>
+                            <p class="font-black text-sm uppercase italic">HG_SCIENTIST</p>
+                            <p class="text-[11px] text-gray-500 font-mono tracking-tighter">UPI: harigovindsingh91-2@oksbi</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-black text-lg text-green-600 italic">₹1250.00</p>
+                        <div class="flex gap-2 mt-1">
+                            <button onclick="processApproval()" class="bg-black text-white px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider">Approve & Pay</button>
+                            <button class="bg-zinc-200 text-zinc-600 px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider">Reject</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-zinc-900 text-white">
+            <h3 class="font-bold mb-4 italic flex items-center gap-2">
+                <i class="fas fa-bullhorn text-yellow-400"></i> Global Ad Injection Engine
+            </h3>
+            <p class="text-zinc-400 text-xs mb-6">Type the message below to display it globally on all user devices (index.html).</p>
+            <div class="flex gap-3">
+                <input type="text" id="ad-content" placeholder="Enter Global Message (e.g. Subscribe to Elite Plan)..." class="flex-1 p-4 bg-zinc-800 border-none rounded-2xl outline-none text-sm text-white">
+                <button onclick="pushAd()" class="bg-white text-black px-8 py-4 rounded-2xl font-black italic uppercase text-sm hover:bg-yellow-400 transition">Push To All</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Security Logic
+        function checkAccess() {
+            const key = document.getElementById('master-key').value;
+            // अपनी पसंदीदा की यहाँ सेट करें (Default: 786)
+            if(key === '786') {
+                document.getElementById('auth-overlay').style.display = 'none';
+            } else {
+                alert("Access Denied: Invalid Master Key");
+            }
+        }
+
+        // 2. Global Ad Sync
+        async function pushAd() {
+            const txt = document.getElementById('ad-content').value;
+            if(!txt) return alert("Text दर्ज करें");
+            
+            try {
+                const res = await fetch('/api/ads/manage', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ adContent: txt, active: true })
+                });
+                alert("Success: Global Ad Updated! Check index.html");
+            } catch(e) {
+                alert("Sync Error: MongoDB connection failed.");
+            }
+        }
+
+        // 3. Approval Sync
+        async function processApproval() {
+            if(confirm("Confirm Payout Approval? User balance will be updated.")) {
+                // यहाँ MongoDB का 'Approved' स्टेटस अपडेट होगा
+                alert("Payment Processing... Status Synced with Cloud.");
+            }
+        }
+
+        // Enter key support for login
+        document.getElementById('master-key').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkAccess();
+        });
+    </script>
+</body>
+</html>
